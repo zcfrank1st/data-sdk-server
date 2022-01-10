@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="LOG_STORE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- deny all events with a level below INFO, that is TRACE and DEBUG -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <!--    for test    -->
+        <file>D:\\data\\fortest\\data.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:\\data\\fortest\\data.log.%d{yyyy-MM-dd}</fileNamePattern>
+        </rollingPolicy>
+        <!--    online    -->
+<!--        <file>/opt/datasdkserver/data.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>/opt/datasdkserver/data.log.%d{yyyy-MM-dd}</fileNamePattern>-->
+<!--        </rollingPolicy>-->
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}\t%-5level\t%msg%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+
+        <encoder>
+            <pattern>%date %-5level [${HOSTNAME} %thread] %msg%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <logger name="com.chaos.datasdkserver.controller" level="info" additivity="false">
+        <appender-ref ref="LOG_STORE_FILE" />
+    </logger>
+
+</configuration>
