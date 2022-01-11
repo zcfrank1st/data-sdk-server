@@ -18,5 +18,5 @@ DataSdkServer
     }
 
 ## 镜像化部署
-    通过jib方式打包镜像并提交dockerhub
+    通过jib方式打包镜像
 
