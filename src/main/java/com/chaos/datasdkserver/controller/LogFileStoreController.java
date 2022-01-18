@@ -2,6 +2,7 @@ package com.chaos.datasdkserver.controller;
 
 
 import com.chaos.datasdkserver.entity.Result;
+import com.chaos.datasdkserver.entity.UploadDataLog;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ public class LogFileStoreController {
     private static String validToken = "";
 
     @PostMapping("/logs")
-    public Result uploadDataToLog(@RequestHeader("token") String token, @RequestBody List<Map<String, Object>> uploadData) {
+    public Result uploadDataToLog(@RequestHeader("token") String token, @RequestBody UploadDataLog uploadData) {
         Result result = new Result();
 
         if (!validToken.equals(token)) {
@@ -31,7 +32,7 @@ public class LogFileStoreController {
         }
 
         try {
-            for(Map<String, Object> data : uploadData) {
+            for(Map<String, Object> data : uploadData.getData()) {
                 StringBuilder values = new StringBuilder();
                 for (Object value : data.values()) {
                     if (value instanceof LinkedHashMap) {
