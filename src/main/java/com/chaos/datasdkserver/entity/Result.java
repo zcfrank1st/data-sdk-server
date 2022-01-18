@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Result {
-    private Integer code;
+    private Integer code = 0;
     private String message;
 }
