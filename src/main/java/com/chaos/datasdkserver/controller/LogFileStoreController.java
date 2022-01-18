@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,7 +21,7 @@ public class LogFileStoreController {
     private static String validToken = "";
 
     @PostMapping("/logs")
-    public Result uploadDataToLog(@RequestHeader("token") String token, @RequestBody Map<String, Object> data) {
+    public Result uploadDataToLog(@RequestHeader("token") String token, @RequestBody List<Map<String, Object>> uploadData) {
         Result result = new Result();
 
         if (!validToken.equals(token)) {
@@ -30,16 +31,18 @@ public class LogFileStoreController {
         }
 
         try {
-            StringBuilder values = new StringBuilder();
-            for (Object value : data.values()) {
-                if (value instanceof LinkedHashMap) {
-                    values.append(gson.toJson(value)).append("\t");
-                } else {
-                    values.append(value).append("\t");
+            for(Map<String, Object> data : uploadData) {
+                StringBuilder values = new StringBuilder();
+                for (Object value : data.values()) {
+                    if (value instanceof LinkedHashMap) {
+                        values.append(gson.toJson(value)).append("\t");
+                    } else {
+                        values.append(value).append("\t");
+                    }
                 }
+                values.deleteCharAt(values.length() - 1);
+                logger.info(values.toString());
             }
-            values.deleteCharAt(values.length() - 1);
-            logger.info(values.toString());
             return result;
         } catch (Exception e) {
             result.setCode(-1);
