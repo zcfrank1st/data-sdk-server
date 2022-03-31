@@ -33,16 +33,22 @@ public class LogFileStoreController {
 
         try {
             for(Map<String, Object> data : uploadData.getData()) {
-                StringBuilder values = new StringBuilder();
-                for (Object value : data.values()) {
-                    if (value instanceof LinkedHashMap) {
-                        values.append(gson.toJson(value)).append("\t");
-                    } else {
-                        values.append(value).append("\t");
-                    }
-                }
-                values.deleteCharAt(values.length() - 1);
-                logger.info(values.toString());
+                // origin flat table
+
+//                StringBuilder values = new StringBuilder();
+//                for (Object value : data.values()) {
+//                    if (value instanceof LinkedHashMap) {
+//                        values.append(gson.toJson(value)).append("\t");
+//                    } else {
+//                        values.append(value).append("\t");
+//                    }
+//                }
+//                values.deleteCharAt(values.length() - 1);
+//                logger.info(values.toString());
+
+                // big json
+
+                logger.info(gson.toJson(data));
             }
             return result;
         } catch (Exception e) {
